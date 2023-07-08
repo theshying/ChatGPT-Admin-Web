@@ -1,0 +1,62 @@
+Arguments: 
+  /Users/shayxu/.nvm/versions/node/v16.15.1/bin/node /Users/shayxu/.nvm/versions/node/v16.15.1/bin/yarn
+
+PATH: 
+  /Users/shayxu/.nvm/versions/node/v16.15.1/bin:/Library/Frameworks/Python.framework/Versions/3.10/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:/Library/Apple/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin
+
+Yarn version: 
+  1.22.19
+
+Node version: 
+  16.15.1
+
+Platform: 
+  darwin x64
+
+Trace: 
+  Error: EACCES: permission denied, unlink '/Users/shayxu/ChatGPT-Admin-Web/packages/bots/node_modules/ts-node'
+
+npm manifest: 
+  {
+    "name": "chatgpt-admin-web",
+    "version": "1.0.0",
+    "description": "ChatGPT web ui with user management and dashboard",
+    "keywords": [
+      "chatgpt",
+      "webui"
+    ],
+    "private": true,
+    "homepage": "https://github.com/AprilNEA/ChatGPT-Admin-Web",
+    "bugs": {
+      "url": "https://github.com/AprilNEA/ChatGPT-Admin-Web/issues",
+      "email": "github@sku.moe"
+    },
+    "license": "MIT",
+    "author": "AprilNEA <github@sku.moe> (https://sku.moe)",
+    "contributors": [
+      "Peron <peron_ap@icloud.com> (https://github.com/PeronGH)"
+    ],
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/AprilNEA/ChatGPT-Admin-Web"
+    },
+    "workspaces": [
+      "apps/*",
+      "packages/*"
+    ],
+    "scripts": {
+      "build": "turbo run build",
+      "dev": "turbo run dev --parallel",
+      "lint": "turbo run lint",
+      "prettier": "prettier --write ."
+    },
+    "devDependencies": {
+      "turbo": "latest"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
