@@ -15,20 +15,20 @@
 
 ## 功能
 
-- 面具 Mask 和提示词列表
+- 场景 Mask 和提示词列表
 - 用户管理、订单管理和订阅管理
 - 支付接口
-    - 第三方支付接口
-      - 虎皮椒
+  - 第三方支付接口
+    - 虎皮椒
 - 文本安全
-    - 敏感词过滤
-    - 第三方过滤
+  - 敏感词过滤
+  - 第三方过滤
 - 模型接入
-    - OpenAI
-    - New Bing
+  - OpenAI
+  - New Bing
 - 收益模式
-    - 广告
-    - 分销
+  - 广告
+  - 分销
 
 <details><summary>思维导图</summary>
 
@@ -63,6 +63,6 @@ Please see [documentation](https://caw.sku.moe)
 
 感谢您的激励，能让该项目持续发展。
 
-[GitHub Sponsor](https://github.com/sponsors/AprilNEA)  |  [爱发电](https://afdian.net/a/aprilnea)
+[GitHub Sponsor](https://github.com/sponsors/AprilNEA) | [爱发电](https://afdian.net/a/aprilnea)
 
 <img src="https://hits-app.vercel.app/hits?url=https%3A%2F%2Fgithub.com%2FAprilNEA%2FChatGPT-Admin-Web" />

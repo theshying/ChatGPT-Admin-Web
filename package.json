@@ -1,36 +1,23 @@
 {
   "name": "chatgpt-admin-web",
   "version": "1.0.0",
-  "description": "ChatGPT web ui with user management and dashboard",
-  "keywords": [
-    "chatgpt",
-    "webui"
-  ],
-  "homepage": "https://github.com/AprilNEA/ChatGPT-Admin-Web",
-  "bugs": {
-    "url": "https://github.com/AprilNEA/ChatGPT-Admin-Web/issues",
-    "email": "github@sku.moe"
-  },
+  "private": true,
   "license": "MIT",
-  "author": "AprilNEA <github@sku.moe> (https://sku.moe)",
-  "contributors": [
-    "Peron <peron_ap@icloud.com> (https://github.com/PeronGH)"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/AprilNEA/ChatGPT-Admin-Web"
-  },
   "workspaces": [
     "apps/*",
     "packages/*"
   ],
   "scripts": {
+    "start": "turbo run start",
     "build": "turbo run build",
     "dev": "turbo run dev --parallel",
     "lint": "turbo run lint",
     "prettier": "prettier --write ."
   },
   "devDependencies": {
-    "turbo": "latest"
+    "turbo": "1.4.4-canary.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }

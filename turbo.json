@@ -7,9 +7,6 @@
     "db:push": {
       "cache": false
     },
-    "build-docs": {
-      "dependsOn": ["^build-docs"]
-    },
     "build": {
       "dependsOn": [
         "^db:generate",

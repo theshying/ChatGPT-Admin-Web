@@ -32,7 +32,7 @@
     "prettier:fix": "prettier --write 'src/**/*.ts'"
   },
   "devDependencies": {
-    "@caw/types": "workspace:*",
+    "@caw/types": "*",
     "@jest/globals": "^29.5.0",
     "@types/jest": "^29.5.0",
     "@types/node": "^18.15.11",
@@ -41,12 +41,12 @@
     "prettier": "^2.8.7",
     "ts-jest": "^29.1.0",
     "ts-node": "^10.9.1",
-    "tsconfig": "workspace:*",
+    "tsconfig": "*",
     "tslib": "^2.5.3",
     "typescript": "^5.0.3"
   },
   "dependencies": {
-    "@caw/database": "workspace:*",
+    "@caw/database": "*",
     "@upstash/ratelimit": "^0.4.2",
     "@upstash/redis": "^1.20.2",
     "jose": "^4.14.1",

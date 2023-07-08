@@ -4,15 +4,15 @@
   "license": "MIT",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build --debug",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
-    "@caw/bots": "workspace:*",
-    "@caw/dal": "workspace:*",
-    "@caw/ratelimit": "workspace:*",
-    "@caw/types": "workspace:*",
+    "@caw/bots": "*",
+    "@caw/dal": "*",
+    "@caw/ratelimit": "*",
+    "@caw/types": "*",
     "@edge-runtime/ponyfill": "2.1.2",
     "@edge-runtime/types": "2.0.8",
     "@fortaine/fetch-event-source": "^3.0.6",
