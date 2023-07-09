@@ -27,9 +27,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { useMobileScreen } from "../utils";
 import dynamic from "next/dynamic";
 import { showToast } from "./ui-lib/ui-lib";
+import { Modal } from "antd";
+import { AuthPage } from "./auth/auth";
 
-const webTitle = process.env.NEXT_PUBLIC_TITLE! ?? "ChatGPT Admin";
-const webOA = process.env.NEXT_PUBLIC_WECHAT_OA! ?? "Your own AI assistant.";
+const webTitle = process.env.NEXT_PUBLIC_TITLE!;
+const webOA = process.env.NEXT_PUBLIC_WECHAT_OA!;
 
 const ChatList = dynamic(
   async () => (await import("./chat/chat-list")).ChatList,
@@ -148,7 +150,9 @@ export function SideBar(props: { className?: string }) {
           icon={<ProfileIcon />}
           text={shouldNarrow ? undefined : Locale.Profile.Name}
           className={styles["sidebar-bar-button"]}
-          onClick={() => navigate(Path.Profile, { state: { fromHome: true } })}
+          onClick={() => {
+            navigate(Path.Profile, { state: { fromHome: true } });
+          }}
           shadow
         />
       </div>

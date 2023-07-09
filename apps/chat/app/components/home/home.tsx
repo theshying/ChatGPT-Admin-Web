@@ -28,6 +28,7 @@ import { SideBar } from "../sidebar";
 import { useAppConfig } from "../../store/config";
 import { AuthPage } from "../auth/auth";
 import { getClientConfig } from "../../config/client";
+import { Modal } from "antd";
 
 export function Loading(props: { noLogo?: boolean }) {
   return (
@@ -125,10 +126,10 @@ function Screen() {
   const config = useAppConfig();
   const location = useLocation();
   const isHome = location.pathname === Path.Home;
-  const isAuth = location.pathname === Path.Auth;
   const isMobileScreen = useMobileScreen();
 
   const navigate = useNavigate();
+
   const [sessionToken, validateSessionToken] = useUserStore((state) => [
     state.sessionToken,
     state.validateSessionToken,
@@ -136,17 +137,8 @@ function Screen() {
 
   useEffect(() => {
     loadAsyncGoogleFont();
+    navigate(Path.Chat);
   }, []);
-
-  useEffect(() => {
-    if (!sessionToken) {
-      if (location.pathname !== Path.Auth) {
-        return navigate(Path.Auth);
-      }
-    } else if (location.pathname === Path.Auth) {
-      return navigate(Path.Chat);
-    }
-  }, [navigate, location.pathname, sessionToken]);
 
   return (
     <div
@@ -159,26 +151,20 @@ function Screen() {
         }`
       }
     >
-      {isAuth ? (
-        <>
-          <AuthPage />
-        </>
-      ) : (
-        <>
-          <SideBar className={isHome ? styles["sidebar-show"] : ""} />
+      <>
+        <SideBar className={isHome ? styles["sidebar-show"] : ""} />
 
-          <div className={styles["window-content"]} id={SlotID.AppBody}>
-            <Routes>
-              <Route path={Path.Home} element={<Chat />} />
-              <Route path={Path.NewChat} element={<NewChat />} />
-              <Route path={Path.Masks} element={<MaskPage />} />
-              <Route path={Path.Chat} element={<Chat />} />
-              <Route path={Path.Settings} element={<Settings />} />
-              <Route path={Path.Profile} element={<Profile />} />
-            </Routes>
-          </div>
-        </>
-      )}
+        <div className={styles["window-content"]} id={SlotID.AppBody}>
+          <Routes>
+            <Route path={Path.Home} element={<Chat />} />
+            <Route path={Path.NewChat} element={<NewChat />} />
+            <Route path={Path.Masks} element={<MaskPage />} />
+            <Route path={Path.Chat} element={<Chat />} />
+            <Route path={Path.Settings} element={<Settings />} />
+            <Route path={Path.Profile} element={<Profile />} />
+          </Routes>
+        </div>
+      </>
     </div>
   );
 }
@@ -197,6 +183,7 @@ export function Home() {
   return (
     <ErrorBoundary>
       <Router>
+        <AuthPage/>
         <Screen />
       </Router>
     </ErrorBoundary>

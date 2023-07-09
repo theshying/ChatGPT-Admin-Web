@@ -1,11 +1,7 @@
-import { Analytics } from "@vercel/analytics/react";
-
+import { Modal } from "antd";
 import { Home } from "./components/home/home";
-
-import { getServerSideConfig } from "./config/server";
-
-const serverConfig = getServerSideConfig();
-
+import { AuthPage } from "./components/auth/auth";
+import { useEffect } from "react";
 export default async function App() {
   return (
     <>

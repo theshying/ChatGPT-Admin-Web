@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import React, {
   FormEvent,
@@ -14,7 +16,6 @@ import { useUserStore } from "@/app/store";
 import useIntervalAsync from "@/app/hooks/use-interval-async";
 import usePreventFormSubmit from "@/app/hooks/use-prevent-form";
 import { Loading } from "@/app/components/loading";
-import LoadingIcon from "@/app/icons/three-dots.svg";
 
 import { showToast } from "@/app/components/ui-lib/ui-lib";
 import Locales from "@/app/locales";
@@ -32,6 +33,7 @@ import { IconButton } from "../button/button";
 import BotIcon from "../../icons/bot.svg";
 import LeftArrow from "../../icons/left.svg";
 import WechatLogo from "../../icons/wechat-logo.png";
+import { Modal } from "antd";
 
 const wechatService = process.env.NEXT_PUBLIC_WECHAT_SERVICE;
 const emailService = process.env.NEXT_PUBLIC_EMAIL_SERVICE;
@@ -276,8 +278,8 @@ const WeChatLogin: React.FC = () => {
 };
 
 export function AuthPage() {
+  const [open, setOpen] = useState(true);
   const [tab, setTab] = useState<"email" | "phone" | "wechat">("phone");
-  console.log(wechatService);
   let content = null;
   switch (tab) {
     case "wechat":
@@ -346,13 +348,22 @@ export function AuthPage() {
   }
 
   return (
-    <div className={styles["auth-page"]}>
-      <div className={`no-dark ${styles["auth-logo"]}`}>
-        <BotIcon />
+    <Modal
+      open={open}
+      wrapClassName={styles["auth-modal"]}
+      footer={null}
+      closable={true}
+      mask={true}
+      onCancel={() => setOpen(false)}
+    >
+      <div className={styles["auth-page"]}>
+        {/* <div className={`no-dark ${styles["auth-logo"]}`}> */}
+        {/* <BotIcon /> */}
+        {/* </div> */}
+        {/* <div className={styles["auth-title"]}>{Locales.Auth.Title}</div> */}
+        {/* <div className={styles["auth-tips"]}>{Locales.Auth.Tips}</div> */}
+        <div className={styles["auth-container"]}>{content}</div>
       </div>
-      <div className={styles["auth-title"]}>{Locales.Auth.Title}</div>
-      <div className={styles["auth-tips"]}>{Locales.Auth.Tips}</div>
-      <div className={styles["auth-container"]}>{content}</div>
-    </div>
+    </Modal>
   );
 }

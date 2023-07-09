@@ -43,7 +43,7 @@ const cn = {
     Name: "定价",
   },
   Auth: {
-    Title: process.env.NEXT_PUBLIC_TITLE ?? "ChatGPT Admin Web",
+    Title: process.env.NEXT_PUBLIC_TITLE,
     Tips: "身份认证",
     Input: "在此处填写访问码",
     Confirm: "确认",
