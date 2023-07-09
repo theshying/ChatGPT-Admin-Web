@@ -28,7 +28,7 @@ const en: LocaleType = {
     Email: "Email",
     Phone: "Phone",
     Code: "Verification Code",
-    Sent: "Sent",
+    Sending: "Sending",
     GetCode: "Get Code",
     NoneData:
       "Please make sure to input your email, password and verification code completely.",

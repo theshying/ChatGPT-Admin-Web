@@ -1,5 +1,11 @@
 import Image from "next/image";
-import React, { FormEvent, useCallback, useState } from "react";
+import React, {
+  FormEvent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { useNavigate } from "react-router-dom";
 
 import { serverStatus } from "@caw/types";
@@ -7,8 +13,9 @@ import { serverStatus } from "@caw/types";
 import { useUserStore } from "@/app/store";
 import useIntervalAsync from "@/app/hooks/use-interval-async";
 import usePreventFormSubmit from "@/app/hooks/use-prevent-form";
-
 import { Loading } from "@/app/components/loading";
+import LoadingIcon from "@/app/icons/three-dots.svg";
+
 import { showToast } from "@/app/components/ui-lib/ui-lib";
 import Locales from "@/app/locales";
 import {
@@ -36,6 +43,12 @@ const CaptchaLogin: React.FC = () => {
 
   const [isSubmitting, handleSubmit] = usePreventFormSubmit();
   const [isCodeSubmitting, handleCodeSubmit] = usePreventFormSubmit();
+  const [countDown, setCountDown] = useState(0);
+
+  useEffect(() => {
+    if (countDown === 0) return;
+    setCountDown((count) => count - 1);
+  }, [countDown]);
 
   const updateSessionToken = useUserStore((state) => state.updateSessionToken);
 
@@ -48,7 +61,8 @@ const CaptchaLogin: React.FC = () => {
 
     switch (res.status) {
       case serverStatus.success: {
-        return showToast(Locales.User.Code + Locales.User.Sent);
+        setCountDown(60);
+        return showToast(Locales.User.Code + Locales.User.Sending);
       }
       case serverStatus.notExist: {
         return showToast(Locales.User.NotYetRegister);
@@ -95,6 +109,16 @@ const CaptchaLogin: React.FC = () => {
     }
   };
 
+  const sendText = useMemo(() => {
+    if (isCodeSubmitting) {
+      return Locales.User.Sending;
+    }
+    if (countDown > 0) {
+      return countDown + "s";
+    }
+    return Locales.User.GetCode;
+  }, [countDown, isCodeSubmitting]);
+
   return (
     <div className={styles["form-container"]}>
       <input
@@ -103,7 +127,7 @@ const CaptchaLogin: React.FC = () => {
         value={register}
         className={styles["auth-input"]}
         onChange={(e) => setRegister(e.target.value)}
-        placeholder={`${Locales.User.Phone} / ${Locales.User.Email}`}
+        placeholder={`${Locales.User.Phone}`}
         required
       />
 
@@ -118,7 +142,8 @@ const CaptchaLogin: React.FC = () => {
           required
         />
         <IconButton
-          text={isCodeSubmitting ? Locales.User.Sent : Locales.User.GetCode}
+          disabled={isCodeSubmitting || countDown !== 0}
+          text={sendText}
           className={styles["auth-get-code-btn"]}
           type="primary"
           onClick={() => handleCodeSubmit(undefined, handleCode)}
