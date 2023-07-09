@@ -3,7 +3,7 @@ import { serverStatus } from "./server";
 export class ServerError extends Error {
   readonly errorCode: serverStatus;
 
-  constructor(code: number, message: string) {
+  constructor(code: serverStatus, message: string) {
     /* Call the constructor method of the parent class and pass the message parameter */
     super(message);
     /* Ensure that this points to the correct */

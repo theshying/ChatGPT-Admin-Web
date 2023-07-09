@@ -1,12 +1,20 @@
-const smsService = process.env.SMS_SERVICE;
-export async function sendPhone(
-  number: string,
-  code: string | number,
-): Promise<boolean> {
-  switch (smsService) {
-    case "uni":
-      return (await import("./uni")).uniSMS(number, code);
-    default:
-      throw new Error("SMS_SERVICE not found");
-  }
+import UniSMS, { SendParams } from "unisms";
+
+const accessKeyId = process.env.SMS_UNI_KEY_ID!;
+const signature = process.env.SMS_UNI_SIGNATURE!;
+const client = new UniSMS({
+  accessKeyId,
+  // accessKeySecret: "your access key secret", // 若使用简易验签模式请删除此行
+});
+
+export async function sendPhone(number: string, code: string | number) {
+  const params: SendParams = {
+    to: number,
+    signature: "UniSMS",
+    templateId: "login_tmpl",
+    templateData: {
+      code,
+    },
+  };
+  return client.send(params);
 }

@@ -27,4 +27,7 @@ export enum serverStatus {
 
   alreadyExisted,
   userAlreadyExisted,
+
+  /* msm */
+  sendMsmFailed,
 }

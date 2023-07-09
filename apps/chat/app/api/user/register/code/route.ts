@@ -27,7 +27,7 @@ export const POST = serverErrorCatcher(
       type: type,
       register: value,
     });
-    console.log('sendCode', result)
+    console.log("sendCode", result);
 
     switch (result.type) {
       case RegisterType.Email:

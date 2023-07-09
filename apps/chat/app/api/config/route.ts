@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import { getServerSideConfig } from "../../config/server";
 
 const serverConfig = getServerSideConfig();
+console.log("serverConfig", serverConfig);
 
 // Danger! Don not write any secret value here!
 // 警告！不要在这里写入任何敏感信息！
