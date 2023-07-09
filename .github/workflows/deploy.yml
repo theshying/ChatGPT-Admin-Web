@@ -54,8 +54,8 @@ jobs:
         env:
           SSH_PRIVATE_KEY: ${{ env.SERVER_PRIVATE_KEY }}
           ARGS: "-avz --delete"
-          SOURCE: ".next/"
+          SOURCE: "./apps/chat/.next/"
           REMOTE_HOST: ${{ env.SERVER_HOST }}
           REMOTE_USER: ${{ env.USER_NAME }}
-          TARGET: /data/chat-web-next # 服务器目标路径
+          TARGET: /data/chat-web # 服务器目标路径
           SCRIPT_AFTER: pm2 reload chat-web
