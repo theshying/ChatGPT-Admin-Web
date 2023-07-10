@@ -49,7 +49,6 @@ function PricingItem(props: {
       {props.price.name !== "Free" && (
         <div className={styles["purchase-wrapper"]}>
           <IconButton
-            icon={ShoppingIcon}
             text={"购买"}
             className={styles["purchase"] + " no-dark"}
             onClick={() => handleUpgrade(props.plan, props.price)}
@@ -64,7 +63,7 @@ export function ProfilePage() {
   const navigate = useNavigate();
   const router = useRouter();
   const { data: planData, isLoading: isPlanLoading } = usePlan();
-
+  console.log(planData, isPlanLoading);
   if (isPlanLoading) return <Loading />;
 
   return (
