@@ -40,7 +40,7 @@ import { ModelConfigList } from "../model-config";
 import { FileName, Path } from "../../constant";
 import { BUILTIN_MASK_STORE } from "../../masks";
 
-export function MaskAvatar(props: { mask: Mask; style: React.CSSProperties }) {
+export function MaskAvatar(props: { mask: Mask; style?: React.CSSProperties }) {
   return props.mask.avatar !== DEFAULT_MASK_AVATAR ? (
     <Avatar avatar={props.mask.avatar} style={props.style} />
   ) : (

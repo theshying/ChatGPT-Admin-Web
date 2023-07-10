@@ -31,7 +31,7 @@ export function AvatarPicker(props: {
 export function Avatar(props: {
   model?: ModelType;
   avatar?: string;
-  style: React.CSSProperties;
+  style?: React.CSSProperties;
 }) {
   if (props.model) {
     return (
