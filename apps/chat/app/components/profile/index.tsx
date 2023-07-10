@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
 
-import { DALType } from "@caw/types";
+import { DALType, serverStatus } from "@caw/types";
 import { Loading } from "@/app/components/loading";
 import { usePlan } from "@/app/api/[base]/api";
 import CloseIcon from "@/app/icons/close.svg";
@@ -27,8 +27,8 @@ function PricingItem(props: {
 }) {
   async function handleUpgrade(plan: Plan, price: Price) {
     const req = await apiPay(plan, price);
-    if (!req) return showToast(Locale.Error.ConfigurationError);
-    props.router.push(req.url);
+    if (req?.status === serverStatus.success) {
+    }
   }
 
   return (
@@ -38,9 +38,7 @@ function PricingItem(props: {
           <div className={styles["title"]}>
             {props.plan.name} - {props.price.name}
           </div>
-          {/*{props.price.description && (*/}
-          {/*  <div className={styles["sub-title"]}>{props.price.description}</div>*/}
-          {/*)}*/}¥ {props.price.amount}
+          ¥ {props.price.amount}
         </div>
         {props.plan.features.map((feature, index) => (
           <div key={index}>· {feature}</div>

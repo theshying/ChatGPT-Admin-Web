@@ -5,14 +5,12 @@ import Plan = DALType.Plan;
 import Price = DALType.Price;
 
 export async function apiPay(plan: Plan, price: Price) {
-  return await (
-    await fetcher("/api/pay", {
-      cache: "no-store",
-      method: "POST",
-      body: JSON.stringify({
-        priceId: price.id,
-        planId: plan.planId,
-      } as z.infer<typeof ChatRequest.RequestNewOrder>),
-    })
-  ).json();
+  return await await fetcher("/api/pay", {
+    cache: "no-store",
+    method: "POST",
+    body: JSON.stringify({
+      priceId: price.id,
+      planId: plan.planId,
+    } as z.infer<typeof ChatRequest.RequestNewOrder>),
+  });
 }

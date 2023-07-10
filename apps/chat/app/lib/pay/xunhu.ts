@@ -120,11 +120,7 @@ export async function startPay({
       hash,
     }),
   });
-  try {
-    return (await resp.json()) as PaymentResponse;
-  } catch (e) {
-    return null;
-  }
+  return (await resp.json()) as PaymentResponse;
 }
 
 function urlEncodedStringToJson(encodedString: string): Record<string, string> {

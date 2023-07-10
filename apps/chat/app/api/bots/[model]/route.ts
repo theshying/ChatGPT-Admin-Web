@@ -8,13 +8,14 @@ import { textSecurity } from "@/app/lib/content";
 import { getRuntime } from "@/app/utils/get-runtime";
 import { serverErrorCatcher } from "@/app/api/catcher";
 
-const OPENAI_API_KEY = process.env.OPENAI_KEY!;
+const OPENAI_API_KEY = "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";
 const BING_COOKIE = process.env.BING_COOKIE!;
 
 export const runtime = getRuntime();
 
 export const POST = serverErrorCatcher(
   async (req: NextRequest, { params }: { params: { model: string } }) => {
+    console.log("1111111");
     let userId = Number(req.headers.get("userId")!);
     if (!userId) userId = await parseUserId(req.headers.get("Authorization")!);
 
