@@ -151,6 +151,7 @@ const CaptchaLogin: React.FC = () => {
       </div>
       <div className={styles["auth-actions"]}>
         <IconButton
+          disabled={isSubmitting}
           onClick={() => handleSubmit(undefined, handleLogin)}
           text={`${Locales.User.Login} / ${Locales.User.Register}`}
           className={styles["auth-submit-btn"]}
