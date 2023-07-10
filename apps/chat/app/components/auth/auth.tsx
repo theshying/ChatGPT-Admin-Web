@@ -30,19 +30,17 @@ import {
 import styles from "./auth.module.scss";
 import { Path } from "../../constant";
 import { IconButton } from "../button/button";
-import BotIcon from "../../icons/bot.svg";
 import LeftArrow from "../../icons/left.svg";
-import WechatLogo from "../../icons/wechat-logo.png";
 import { Modal } from "antd";
+import useUiStore from "@/app/store/ui";
 
 const wechatService = process.env.NEXT_PUBLIC_WECHAT_SERVICE;
 const emailService = process.env.NEXT_PUBLIC_EMAIL_SERVICE;
 
 const CaptchaLogin: React.FC = () => {
-  const navigate = useNavigate();
   const [register, setRegister] = useState("");
   const [code, setCode] = useState("");
-
+  const setModalLogin = useUiStore((state) => state.setModalLogin);
   const [isSubmitting, handleSubmit] = usePreventFormSubmit();
   const [isCodeSubmitting, handleCodeSubmit] = usePreventFormSubmit();
   const [countDown, setCountDown] = useState(0);
@@ -93,7 +91,7 @@ const CaptchaLogin: React.FC = () => {
       case serverStatus.success: {
         showToast(Locales.User.Success(Locales.User.Login));
         updateSessionToken(res.signedToken.token, res.signedToken.expiredAt);
-        navigate(Path.Chat);
+        setModalLogin(false);
         break;
       }
       case serverStatus.notExist: {
@@ -278,7 +276,9 @@ const WeChatLogin: React.FC = () => {
 };
 
 export function AuthPage() {
-  const [open, setOpen] = useState(true);
+  const loginModalShow = useUiStore((state) => state.modal.login);
+  const setModalLogin = useUiStore((state) => state.setModalLogin);
+
   const [tab, setTab] = useState<"email" | "phone" | "wechat">("phone");
   let content = null;
   switch (tab) {
@@ -328,20 +328,20 @@ export function AuthPage() {
           </div>
           {tab === "phone" ? <CaptchaLogin /> : <EmailLogin />}
 
-          <div className={styles["divider"]}>
+          {/* <div className={styles["divider"]}>
             <div className={styles["divider-line"]} />
             <div className={styles["divider-text"]}>or</div>
             <div className={styles["divider-line"]} />
-          </div>
-          <div className={styles["third-part-login-options"]}>
+          </div> */}
+          {/* <div className={styles["third-part-login-options"]}>
             <img
               src={WechatLogo.src}
               className={styles["third-part-option"]}
               onClick={() => {
                 setTab("wechat");
               }}
-            />
-          </div>
+            /> */}
+          {/* </div> */}
         </div>
       );
       break;
@@ -349,12 +349,12 @@ export function AuthPage() {
 
   return (
     <Modal
-      open={open}
+      open={loginModalShow}
       wrapClassName={styles["auth-modal"]}
       footer={null}
       closable={true}
       mask={true}
-      onCancel={() => setOpen(false)}
+      onCancel={() => setModalLogin(false)}
     >
       <div className={styles["auth-page"]}>
         {/* <div className={`no-dark ${styles["auth-logo"]}`}> */}

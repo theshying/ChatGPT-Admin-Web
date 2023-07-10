@@ -13,9 +13,21 @@ import EyeIcon from "../../icons/eye.svg";
 import CopyIcon from "../../icons/copy.svg";
 
 import { DEFAULT_MASK_AVATAR, Mask, useMaskStore } from "../../store/mask";
-import { ChatMessage, ModelConfig, useAppConfig, useChatStore } from "../../store";
+import {
+  ChatMessage,
+  ModelConfig,
+  useAppConfig,
+  useChatStore,
+} from "../../store";
 import { ROLES } from "../../client/api";
-import { Input, List, ListItem, Modal, Popover, Select } from "../ui-lib/ui-lib";
+import {
+  Input,
+  List,
+  ListItem,
+  Modal,
+  Popover,
+  Select,
+} from "../ui-lib/ui-lib";
 import { Avatar, AvatarPicker } from "../emoji";
 import Locale, { AllLangs, ALL_LANG_OPTIONS, Lang } from "../../locales";
 import { useNavigate } from "react-router-dom";
@@ -28,11 +40,11 @@ import { ModelConfigList } from "../model-config";
 import { FileName, Path } from "../../constant";
 import { BUILTIN_MASK_STORE } from "../../masks";
 
-export function MaskAvatar(props: { mask: Mask }) {
+export function MaskAvatar(props: { mask: Mask; style: React.CSSProperties }) {
   return props.mask.avatar !== DEFAULT_MASK_AVATAR ? (
-    <Avatar avatar={props.mask.avatar} />
+    <Avatar avatar={props.mask.avatar} style={props.style} />
   ) : (
-    <Avatar model={props.mask.modelConfig.model} />
+    <Avatar model={props.mask.modelConfig.model} style={props.style} />
   );
 }
 

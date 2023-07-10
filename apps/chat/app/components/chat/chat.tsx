@@ -68,6 +68,7 @@ import { useCommand } from "../../command";
 import { prettyObject } from "../../utils/format";
 import { ExportMessageModal } from "../exporter/exporter";
 import { getClientConfig } from "../../config/client";
+import useUiStore from "@/app/store/ui";
 
 const Markdown = dynamic(async () => (await import("../markdown")).Markdown, {
   loading: () => <LoadingIcon />,
@@ -477,6 +478,7 @@ export function Chat() {
   const { scrollRef, setAutoScroll, scrollToBottom } = useScrollToBottom();
   const [hitBottom, setHitBottom] = useState(true);
   const isMobileScreen = useMobileScreen();
+  const setModalLogin = useUiStore((state) => state.setModalLogin);
   const navigate = useNavigate();
 
   const onChatBodyScroll = (e: HTMLElement) => {
@@ -541,6 +543,11 @@ export function Chat() {
   };
 
   const doSubmit = (userInput: string) => {
+    if (userStore.sessionToken === null) {
+      setModalLogin(true);
+      return;
+    }
+
     if (userInput.trim() === "") return;
     setIsLoading(true);
     chatStore.onUserInput(userInput).then(() => setIsLoading(false));
@@ -660,9 +667,9 @@ export function Chat() {
     session.messages.at(0)?.content !== BOT_HELLO.content
   ) {
     const copiedHello = Object.assign({}, BOT_HELLO);
-    if (!userStore.sessionToken) {
-      copiedHello.content = Locale.Error.Unauthorized;
-    }
+    // if (!userStore.sessionToken) {
+    // copiedHello.content = Locale.Error.Unauthorized;
+    // }
     context.push(copiedHello);
   }
 
@@ -817,82 +824,95 @@ export function Chat() {
                   isUser ? styles["chat-message-user"] : styles["chat-message"]
                 }
               >
-                <div className={styles["chat-message-container"]}>
+                <div
+                  className={styles["chat-message-container"]}
+                  style={{
+                    flexFlow: isUser ? "row-reverse" : "row",
+                  }}
+                >
                   <div className={styles["chat-message-avatar"]}>
                     {message.role === "user" ? (
-                      <Avatar avatar={config.avatar} />
+                      <Avatar
+                        avatar={config.avatar}
+                        style={{ marginLeft: "7px" }}
+                      />
                     ) : (
-                      <MaskAvatar mask={session.mask} />
+                      <MaskAvatar
+                        mask={session.mask}
+                        style={{ marginRight: "7px" }}
+                      />
                     )}
                   </div>
-                  {showTyping && (
-                    <div className={styles["chat-message-status"]}>
-                      {Locale.Chat.Typing}
-                    </div>
-                  )}
-                  <div className={styles["chat-message-item"]}>
-                    {showActions && (
-                      <div className={styles["chat-message-top-actions"]}>
-                        {message.streaming ? (
+                  <div>
+                    {showTyping && (
+                      <div className={styles["chat-message-status"]}>
+                        {Locale.Chat.Typing}
+                      </div>
+                    )}
+                    <div className={styles["chat-message-item"]}>
+                      {showActions && (
+                        <div className={styles["chat-message-top-actions"]}>
+                          {message.streaming ? (
+                            <div
+                              className={styles["chat-message-top-action"]}
+                              onClick={() => onUserStop(message.id ?? i)}
+                            >
+                              {Locale.Chat.Actions.Stop}
+                            </div>
+                          ) : (
+                            <>
+                              <div
+                                className={styles["chat-message-top-action"]}
+                                onClick={() => onDelete(message.id ?? i)}
+                              >
+                                {Locale.Chat.Actions.Delete}
+                              </div>
+                              <div
+                                className={styles["chat-message-top-action"]}
+                                onClick={() => onResend(message.id ?? i)}
+                              >
+                                {Locale.Chat.Actions.Retry}
+                              </div>
+                            </>
+                          )}
+
                           <div
                             className={styles["chat-message-top-action"]}
-                            onClick={() => onUserStop(message.id ?? i)}
+                            onClick={() => copyToClipboard(message.content)}
                           >
-                            {Locale.Chat.Actions.Stop}
+                            {Locale.Chat.Actions.Copy}
                           </div>
-                        ) : (
-                          <>
-                            <div
-                              className={styles["chat-message-top-action"]}
-                              onClick={() => onDelete(message.id ?? i)}
-                            >
-                              {Locale.Chat.Actions.Delete}
-                            </div>
-                            <div
-                              className={styles["chat-message-top-action"]}
-                              onClick={() => onResend(message.id ?? i)}
-                            >
-                              {Locale.Chat.Actions.Retry}
-                            </div>
-                          </>
-                        )}
-
-                        <div
-                          className={styles["chat-message-top-action"]}
-                          onClick={() => copyToClipboard(message.content)}
-                        >
-                          {Locale.Chat.Actions.Copy}
-                        </div>
-                      </div>
-                    )}
-                    <Markdown
-                      content={message.content}
-                      loading={
-                        (message.preview || message.content.length === 0) &&
-                        !isUser
-                      }
-                      onContextMenu={(e) => onRightClick(e, message)}
-                      onDoubleClickCapture={() => {
-                        if (!isMobileScreen) return;
-                        setUserInput(message.content);
-                      }}
-                      fontSize={fontSize}
-                      parentRef={scrollRef}
-                      defaultShow={i >= messages.length - 10}
-                    />
-                  </div>
-                  {!isUser && !message.preview && (
-                    <div className={styles["chat-message-actions"]}>
-                      <div className={styles["chat-message-action-date"]}>
-                        {message.date.toLocaleString()}
-                      </div>
-                      {message.model && (
-                        <div className={styles["chat-message-action-date"]}>
-                          {message.model.toUpperCase()}
                         </div>
                       )}
+                      <Markdown
+                        content={message.content}
+                        loading={
+                          (message.preview || message.content.length === 0) &&
+                          !isUser
+                        }
+                        onContextMenu={(e) => onRightClick(e, message)}
+                        onDoubleClickCapture={() => {
+                          if (!isMobileScreen) return;
+                          setUserInput(message.content);
+                        }}
+                        fontSize={fontSize}
+                        parentRef={scrollRef}
+                        defaultShow={i >= messages.length - 10}
+                      />
                     </div>
-                  )}
+                    {!isUser && !message.preview && (
+                      <div className={styles["chat-message-actions"]}>
+                        <div className={styles["chat-message-action-date"]}>
+                          {message.date.toLocaleString()}
+                        </div>
+                        {message.model && (
+                          <div className={styles["chat-message-action-date"]}>
+                            {message.model.toUpperCase()}
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
               {shouldShowClearContextDivider && <ClearContextDivider />}

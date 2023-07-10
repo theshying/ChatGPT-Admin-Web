@@ -12,7 +12,7 @@ const cn = {
     Submit: "提交",
     Login: "登录",
     WeChatLogin: "微信登录",
-    CodeLogin: "验证码登录",
+    CodeLogin: "请先登录",
     PasswordLogin: "密码登录",
 
     Register: "注册",
@@ -25,7 +25,7 @@ const cn = {
     Email: "邮箱",
     Phone: "手机号",
     Code: "验证码",
-    Sending: "发送中",
+    Sending: "发送中...",
     GetCode: "获取验证码",
     NoneData: "请确保邮箱、密码和验证码输入完整",
     EmailNonExistent: "邮箱不存在，请重新输入",
@@ -240,7 +240,7 @@ const cn = {
   },
   Store: {
     DefaultTopic: "新的聊天",
-    BotHello: "有什么可以帮你的吗",
+    BotHello: "哈喽，我是一个只能聊天机器人，有什么可以帮你的吗？",
     Error: "出错了，稍后重试吧",
     Prompt: {
       History: (content: string) => "这是历史聊天总结作为前情提要：" + content,

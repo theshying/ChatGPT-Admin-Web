@@ -1,13 +1,14 @@
-import {OpenaiPath, REQUEST_TIMEOUT_MS} from "@/app/constant";
-import {useAppConfig, useChatStore} from "@/app/store";
+import { OpenaiPath, REQUEST_TIMEOUT_MS } from "@/app/constant";
+import { useAppConfig, useChatStore } from "@/app/store";
 
-import {ChatOptions, getHeaders, LLMApi, LLMUsage} from "../api";
+import { ChatOptions, getHeaders, LLMApi, LLMUsage } from "../api";
 import Locale from "../../locales";
 import {
   EventStreamContentType,
   fetchEventSource,
 } from "@fortaine/fetch-event-source";
-import {prettyObject} from "@/app/utils/format";
+import { prettyObject } from "@/app/utils/format";
+import useUiStore from "@/app/store/ui";
 
 export class ChatGPTApi implements LLMApi {
   path(path: string): string {
@@ -103,11 +104,10 @@ export class ChatGPTApi implements LLMApi {
               try {
                 const resJson = await res.clone().json();
                 extraInfo = prettyObject(resJson);
-              } catch {
-              }
+              } catch {}
 
               if (res.status === 401) {
-                responseTexts.push(Locale.Error.Unauthorized);
+                useUiStore.getState().setModalLogin(true);
               }
 
               if (extraInfo) {
@@ -225,4 +225,4 @@ export class ChatGPTApi implements LLMApi {
   }
 }
 
-export {OpenaiPath};
+export { OpenaiPath };

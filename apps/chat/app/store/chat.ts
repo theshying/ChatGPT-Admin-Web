@@ -283,6 +283,7 @@ export const useChatStore = create<ChatStore>()(
           messages: sendMessages,
           config: { ...modelConfig, stream: true },
           onUpdate(message) {
+            debugger;
             botMessage.streaming = true;
             if (message) {
               botMessage.content = message;
@@ -292,6 +293,7 @@ export const useChatStore = create<ChatStore>()(
             });
           },
           onFinish(message) {
+            debugger;
             botMessage.streaming = false;
             if (message) {
               botMessage.content = message;
@@ -303,6 +305,7 @@ export const useChatStore = create<ChatStore>()(
             );
           },
           onError(error) {
+            debugger;
             const isAborted = error.message.includes("aborted");
             botMessage.content =
               "\n\n" +

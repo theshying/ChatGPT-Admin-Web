@@ -1,5 +1,6 @@
+import { showToast } from "@/app/components/ui-lib/ui-lib";
+import fetcher from "@/app/utils/fetcher";
 import { ChatResponse } from "@caw/types";
-
 export async function apiUserLoginGetTicket() {
   return (await (
     await fetch(`/api/user/login`, {
@@ -45,17 +46,15 @@ export const apiUserRegisterCode = async (
   type: "email" | "phone",
   value: string,
 ) => {
-  return await (
-    await fetch("/api/user/register/code", {
-      method: "POST",
-      cache: "no-store",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        type: type,
-        value: value,
-      }),
-    })
-  ).json();
+  return fetcher("/api/user/register/code", {
+    method: "POST",
+    cache: "no-store",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      type: type,
+      value: value,
+    }),
+  }) as Promise<ChatResponse.UserRegisterCode>;
 };
 
 export const apiUserRegister = async ({
@@ -71,18 +70,16 @@ export const apiUserRegister = async ({
   verificationCode: string;
   invitationCode?: string;
 }) => {
-  return (await (
-    await fetch("/api/user/register", {
-      cache: "no-store",
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email: email?.trim() ?? "",
-        phone: phone?.trim() ?? "",
-        password,
-        register_code: verificationCode,
-        invitation_code: invitationCode?.toLowerCase() ?? "",
-      }),
-    })
-  ).json()) as ChatResponse.UserRegister;
+  return fetcher("/api/user/register", {
+    cache: "no-store",
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      email: email?.trim() ?? "",
+      phone: phone?.trim() ?? "",
+      password,
+      register_code: verificationCode,
+      invitation_code: invitationCode?.toLowerCase() ?? "",
+    }),
+  }) as Promise<ChatResponse.UserRegister>;
 };

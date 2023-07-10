@@ -28,10 +28,14 @@ export function AvatarPicker(props: {
   );
 }
 
-export function Avatar(props: { model?: ModelType; avatar?: string }) {
+export function Avatar(props: {
+  model?: ModelType;
+  avatar?: string;
+  style: React.CSSProperties;
+}) {
   if (props.model) {
     return (
-      <div className="no-dark">
+      <div className="no-dark" style={props.style}>
         {props.model?.startsWith("gpt-4") ? (
           <BlackBotIcon className="user-avatar" />
         ) : (
@@ -42,7 +46,7 @@ export function Avatar(props: { model?: ModelType; avatar?: string }) {
   }
 
   return (
-    <div className="user-avatar">
+    <div className="user-avatar" style={props.style}>
       {props.avatar && <EmojiAvatar avatar={props.avatar} />}
     </div>
   );

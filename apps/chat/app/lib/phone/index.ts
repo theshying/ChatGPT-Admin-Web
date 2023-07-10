@@ -11,7 +11,7 @@ export async function sendPhone(number: string, code: string | number) {
   const params: SendParams = {
     to: number,
     signature: "UniSMS",
-    templateId: "login_tmpl",
+    templateId: "pub_verif_ttl3",
     templateData: {
       code,
     },
