@@ -5,6 +5,7 @@ import { streamToLineIterator } from './utils';
 const openAiBase = process.env.OPENAI_BASE ?? 'https://api.openai.com';
 const openAiEndpoint = `${openAiBase}/v1/chat/completions`;
 const openAiKey = process.env.OPENAI_API_KEY!;
+
 export class OpenAIBot extends AbstractBot {
   constructor(
     private readonly apiKey: string,
@@ -20,7 +21,7 @@ export class OpenAIBot extends AbstractBot {
    */
   protected async *doAnswer(params: AnswerParams): AsyncIterable<string> {
     const { conversation, maxTokens, signal } = params;
-
+    console.log('doAnswer', openAiEndpoint, this.apiKey ?? openAiKey);
     const response = await fetch(openAiEndpoint, {
       method: 'POST',
       headers: {
