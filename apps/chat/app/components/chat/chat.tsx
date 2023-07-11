@@ -478,7 +478,7 @@ export function Chat() {
   const { scrollRef, setAutoScroll, scrollToBottom } = useScrollToBottom();
   const [hitBottom, setHitBottom] = useState(true);
   const isMobileScreen = useMobileScreen();
-  const setModalLogin = useUiStore((state) => state.setModalLogin);
+  const setModalLogin = useUiStore((state) => state.loginModal.setShow);
   const navigate = useNavigate();
 
   const onChatBodyScroll = (e: HTMLElement) => {

@@ -10,10 +10,11 @@ import AddIcon from "../icons/add.svg";
 import CloseIcon from "../icons/close.svg";
 import MaskIcon from "../icons/mask.svg";
 import ProfileIcon from "../icons/profile.svg";
+import LoginIcon from "../icons/login.svg";
 
 import Locale from "../locales";
 
-import { useAppConfig, useChatStore } from "../store";
+import { useAppConfig, useChatStore, useUserStore } from "../store";
 
 import {
   MAX_SIDEBAR_WIDTH,
@@ -26,9 +27,7 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { useMobileScreen } from "../utils";
 import dynamic from "next/dynamic";
-import { showToast } from "./ui-lib/ui-lib";
-import { Modal } from "antd";
-import { AuthPage } from "./auth/auth";
+import useUiStore from "../store/ui";
 
 const webTitle = process.env.NEXT_PUBLIC_TITLE!;
 const webOA = process.env.NEXT_PUBLIC_WECHAT_OA!;
@@ -112,6 +111,9 @@ function useDragSideBar() {
 
 export function SideBar(props: { className?: string }) {
   const chatStore = useChatStore();
+  const sessionToken = useUserStore((state) => state.sessionToken);
+  const { setShow } = useUiStore((state) => state.profileModal);
+  const setLoginModal = useUiStore((state) => state.loginModal.setShow);
 
   // drag side bar
   const { onDragMouseDown, shouldNarrow } = useDragSideBar();
@@ -146,15 +148,27 @@ export function SideBar(props: { className?: string }) {
           onClick={() => navigate(Path.NewChat, { state: { fromHome: true } })}
           shadow
         />
-        <IconButton
-          icon={<ProfileIcon />}
-          text={shouldNarrow ? undefined : Locale.Profile.Name}
-          className={styles["sidebar-bar-button"]}
-          onClick={() => {
-            navigate(Path.Profile, { state: { fromHome: true } });
-          }}
-          shadow
-        />
+        {sessionToken ? (
+          <IconButton
+            icon={<ProfileIcon />}
+            text={shouldNarrow ? undefined : Locale.Profile.Name}
+            className={styles["sidebar-bar-button"]}
+            onClick={() => {
+              setShow(true);
+            }}
+            shadow
+          />
+        ) : (
+          <IconButton
+            icon={<LoginIcon />}
+            text={shouldNarrow ? undefined : Locale.User.Login}
+            className={styles["sidebar-bar-button"]}
+            onClick={() => {
+              setLoginModal(true);
+            }}
+            shadow
+          />
+        )}
       </div>
 
       <div

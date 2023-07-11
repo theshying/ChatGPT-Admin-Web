@@ -1,16 +1,39 @@
 import { create } from "zustand";
 export type UiStore = {
-  modal: {
-    login: boolean;
+  loginModal: {
+    show: boolean;
+    setShow: (show: boolean) => void;
   };
-  setModalLogin: (login: boolean) => void;
+  profileModal: {
+    show: boolean;
+    setShow: (show: boolean) => void;
+  };
 };
 const useUiStore = create<UiStore>((set) => ({
-  modal: {
-    login: false,
+  loginModal: {
+    show: false,
+    setShow(show) {
+      set((state) => ({
+        ...state,
+        loginModal: {
+          ...state.loginModal,
+          show,
+        },
+      }));
+    },
   },
-  setModalLogin: (login: boolean) =>
-    set((state) => ({ modal: { ...state.modal, login } })),
+  profileModal: {
+    show: false,
+    setShow(show) {
+      set((state) => ({
+        ...state,
+        profileModal: {
+          ...state.profileModal,
+          show,
+        },
+      }));
+    },
+  },
 }));
 
 export default useUiStore;

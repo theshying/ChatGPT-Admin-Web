@@ -40,7 +40,7 @@ const emailService = process.env.NEXT_PUBLIC_EMAIL_SERVICE;
 const CaptchaLogin: React.FC = () => {
   const [register, setRegister] = useState("");
   const [code, setCode] = useState("");
-  const setModalLogin = useUiStore((state) => state.setModalLogin);
+  const setModalLogin = useUiStore((state) => state.loginModal.setShow);
   const [isSubmitting, handleSubmit] = usePreventFormSubmit();
   const [isCodeSubmitting, handleCodeSubmit] = usePreventFormSubmit();
   const [countDown, setCountDown] = useState(0);
@@ -276,9 +276,8 @@ const WeChatLogin: React.FC = () => {
   );
 };
 
-export function AuthPage() {
-  const loginModalShow = useUiStore((state) => state.modal.login);
-  const setModalLogin = useUiStore((state) => state.setModalLogin);
+export function AuthModal() {
+  const { show, setShow } = useUiStore((state) => state.loginModal);
 
   const [tab, setTab] = useState<"email" | "phone" | "wechat">("phone");
   let content = null;
@@ -350,12 +349,12 @@ export function AuthPage() {
 
   return (
     <Modal
-      open={loginModalShow}
+      open={show}
       wrapClassName={styles["auth-modal"]}
       footer={null}
       closable={true}
       mask={true}
-      onCancel={() => setModalLogin(false)}
+      onCancel={() => setShow(false)}
     >
       <div className={styles["auth-page"]}>
         {/* <div className={`no-dark ${styles["auth-logo"]}`}> */}

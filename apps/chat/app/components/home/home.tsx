@@ -26,9 +26,9 @@ import {
 } from "react-router-dom";
 import { SideBar } from "../sidebar";
 import { useAppConfig } from "../../store/config";
-import { AuthPage } from "../auth/auth";
+import { AuthModal } from "../auth/auth";
 import { getClientConfig } from "../../config/client";
-import { Modal } from "antd";
+import ProfileModal from "../profile/index";
 
 export function Loading(props: { noLogo?: boolean }) {
   return (
@@ -183,7 +183,8 @@ export function Home() {
   return (
     <ErrorBoundary>
       <Router>
-        <AuthPage/>
+        <ProfileModal />
+        <AuthModal />
         <Screen />
       </Router>
     </ErrorBoundary>

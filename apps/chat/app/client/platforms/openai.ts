@@ -108,7 +108,7 @@ export class ChatGPTApi implements LLMApi {
               } catch {}
 
               if (res.status === 401) {
-                useUiStore.getState().setModalLogin(true);
+                useUiStore.getState().loginModal.setShow(true);
               }
 
               if (extraInfo) {
